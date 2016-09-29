@@ -17,5 +17,6 @@ namespace Strado.InVento.Core.Interfaces
         DbSet<Suppliers> Suppliers { get; set; }
         DbSet<Inventory> Inventory { get; set; }
         DbSet<PartsSaleHistory> PartsSaleHistory { get; set; }
+        DbSet<PartsPurchaseRecords> PartsPurchaseRecords { get; set; }
     }
 }
