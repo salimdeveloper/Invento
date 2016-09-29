@@ -15,7 +15,7 @@ namespace Strado.InVento.Core.ViewModels
         [Required]
         public string BrandName { get; set; }
 
-        
+        //Implement Valid Upload Image Extension
         public string BrandLogo { get; set; }
        
 
