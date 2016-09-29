@@ -22,6 +22,10 @@ namespace Strado.InVento.Persistence
 
         public IPartsSaleHistoryRepository PartsSaleHistories { get; private set; }
 
+        public IPartsPurchaseRecordsReposiroty PartsPurchaseRecords { get; private set; }
+
+        public IInventoryRepository Inventory { get; private set; }
+       
 
         public UnitOfWork(ApplicationDbContext context)
         {
@@ -31,6 +35,8 @@ namespace Strado.InVento.Persistence
             Parts = new PartsRepository(context);
             Suppliers = new SupplierRepository(context);
             PartsSaleHistories = new PartsSaleHistoryRepository(context);
+            PartsPurchaseRecords = new PartsPurchaseRecordsReposiroty(context);
+            Inventory = new InventoryRepository(context);
         }
 
         public void Complete()
