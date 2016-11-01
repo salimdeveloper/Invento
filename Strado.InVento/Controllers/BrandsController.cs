@@ -13,7 +13,7 @@ namespace Strado.InVento.Controllers
     public class BrandsController : Controller
     {
         private IUnitOfWork _unitOfWork;
-        private string _imageurl;
+        private string UPLOAD_DIRECTORY="/Images/BrandImages/";
 
         public BrandsController(IUnitOfWork unitOfWork)
         {
@@ -34,59 +34,78 @@ namespace Strado.InVento.Controllers
         [Authorize]
         public ActionResult Create()
         {
-            
-            return View();
+            var viewModel = new BrandsViewModel
+            {
+                Heading = "Add a part"
+            };
+            return View(viewModel);
         }
 
         [Authorize]
         [HttpPost]
-        public ActionResult Create(BrandsViewModel _viewModel, HttpPostedFileBase image)
+        [ValidateAntiForgeryToken]
+        public ActionResult Create(BrandsViewModel _viewModel)
         {
             
 
             if (!ModelState.IsValid)
             {
-                return View("Create");
+                _viewModel.Heading = "Add a part";
+                return View("Create", _viewModel);
             }
            
-            ImageUpload(image);
+            ImageUpload(_viewModel.BrandLogo,UPLOAD_DIRECTORY);
             var _brandModel = new Brand
             {
                 BrandName = _viewModel.BrandName,
-                LogoImgSrc = _imageurl
+                LogoImgSrc = Path.Combine(UPLOAD_DIRECTORY, _viewModel.BrandLogo.FileName)
             };
             _unitOfWork.Brands.AddBrand(_brandModel);
             _unitOfWork.Complete();
             return RedirectToAction("BrandList", "Brands");
         }
-
-
-        //Refactor::Implement Seperation Of Concern
-        #region Image Upload Code
-        private void ImageUpload(HttpPostedFileBase _image)
+        [Authorize]
+        public ActionResult Edit(int id)
         {
 
-            var validImageTypes = new string[]
-                             {
-                     "image/gif",
-                     "image/jpeg",
-                     "image/pjpeg",
-                     "image/png"
-                             };
+            Brand brand = _unitOfWork.Brands.GetBrandWithBrandId(id);
 
-            if (_image == null || _image.ContentLength == 0)
+            var viewModel = new BrandsViewModel
             {
-                ModelState.AddModelError("BrandLogo", "This field is required");
-            }
-            else if (!validImageTypes.Contains(_image.ContentType))
+                Heading = "Edit Brand",
+                BrandName=brand.BrandName,
+                ImageUrl = brand.LogoImgSrc,
+                Id=brand.Id
+
+            };
+
+            return View("Create", viewModel);
+        }
+        [Authorize]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+
+        public ActionResult Update(BrandsViewModel viewModel)
+        {
+            if (!ModelState.IsValid)
             {
-                ModelState.AddModelError("BrandLogo", "Please choose either a GIF, JPG or PNG image");
+                viewModel.Heading = "Update Brand";
+                return View("Create", viewModel);
             }
+            var brand = _unitOfWork.Brands.GetBrandWithBrandId(viewModel.Id);
+            brand.Modify(viewModel.BrandName,viewModel.ImageUrl);
+
+            _unitOfWork.Complete();
+            return RedirectToAction("BrandList", "Brands");
+        }
+
+        //Refactor::Implement Seperation Of Concern
+                #region Image Upload Code
+        private void ImageUpload(HttpPostedFileBase _image, string _uploadDir)
+        {
             if (_image != null && _image.ContentLength > 0)
             {
-                var uploadDir = "/Images/BrandImages/";
-                var imagePath = Path.Combine(Server.MapPath(uploadDir), _image.FileName);
-                _imageurl = Path.Combine(uploadDir, _image.FileName);
+                var imagePath = Path.Combine(Server.MapPath(_uploadDir), _image.FileName);
                 _image.SaveAs(imagePath);
 
             }

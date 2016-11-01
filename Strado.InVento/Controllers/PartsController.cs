@@ -13,13 +13,14 @@ namespace Strado.InVento.Controllers
     public class PartsController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
-        private string _imageurl;
+        private string UPLOAD_DIRECTORY = "~/Images/PartsImages/";
         public PartsController(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
         }
 
         // GET: Parts
+        [Authorize]
         public ActionResult PartsList()
         {
             var _parts = _unitOfWork.Parts.GetAllParts();
@@ -29,7 +30,9 @@ namespace Strado.InVento.Controllers
         [Authorize]
         public ActionResult Create()
         {
-            var viewModel = new PartsFormViewModel {
+            var viewModel = new PartsFormViewModel
+            {
+                Heading="Add a part",
                 Categories = _unitOfWork.Categories.GetAllNonDeleteCategories(),
                 Brands = _unitOfWork.Brands.GetAllBrands()
             };
@@ -41,7 +44,7 @@ namespace Strado.InVento.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
 
-        public ActionResult Create(PartsFormViewModel viewModel, HttpPostedFileBase image)
+        public ActionResult Create(PartsFormViewModel viewModel)
         {
             if (!ModelState.IsValid)
             {
@@ -49,22 +52,42 @@ namespace Strado.InVento.Controllers
                 viewModel.Brands = _unitOfWork.Brands.GetAllBrands();
                 return View("Create", viewModel);
             }
-            ImageUpload(image);
+            ImageUpload(viewModel.PartImage, UPLOAD_DIRECTORY);
 
-            var _partsModel = new Parts {
+            var _partsModel = new Parts
+            {
                 PartName = viewModel.PartName,
-                PartImageUrl = _imageurl,
-                PartDetails=viewModel.PartDetails,
-                CategoriesId=viewModel.CategoriesId,
-                BrandId=viewModel.BrandId
-                
-
-
+                PartImageUrl = Path.Combine(UPLOAD_DIRECTORY, viewModel.PartImage.FileName),
+                PartDetails = viewModel.PartDetails,
+                CategoriesId = viewModel.CategoriesId,
+                BrandId = viewModel.BrandId
             };
 
-           _unitOfWork.Parts.AddPart(_partsModel);
+            _unitOfWork.Parts.AddPart(_partsModel);
             _unitOfWork.Complete();
             return RedirectToAction("PartsList", "Parts");
+        }
+        [Authorize]
+        public ActionResult Edit(int id)
+        {
+
+            Parts part = _unitOfWork.Parts.GetPartsWithPartId(id);
+
+            var viewModel = new PartsFormViewModel
+            {
+                Heading="Edit part",
+                Categories = _unitOfWork.Categories.GetAllNonDeleteCategories(),
+                Brands = _unitOfWork.Brands.GetAllBrands(),
+                PartName = part.PartName,
+                PartDetails = part.PartDetails,
+                Id = part.Id,
+                BrandId =part.BrandId,
+                CategoriesId =part.CategoriesId,
+                ImageUrl=part.PartImageUrl
+                
+            };
+
+            return View("Create", viewModel);
         }
 
         [Authorize]
@@ -73,41 +96,42 @@ namespace Strado.InVento.Controllers
 
         public ActionResult Update(PartsFormViewModel viewModel)
         {
+            if (!ModelState.IsValid)
+            {
 
-            return View();
+                viewModel.Categories = _unitOfWork.Categories.GetAllNonDeleteCategories();
+                viewModel.Brands = _unitOfWork.Brands.GetAllBrands();
+                return View("Create", viewModel);
+            }
+            var part= _unitOfWork.Parts.GetPartsWithPartId(viewModel.Id);
+            part.Modify(viewModel.PartName,viewModel.PartDetails,viewModel.BrandId,viewModel.CategoriesId,UpdateImageUpload(viewModel.PartImage,UPLOAD_DIRECTORY,viewModel.ImageUrl));
+
+            _unitOfWork.Complete();
+            return RedirectToAction("PartsList", "Parts");
         }
 
         //Refactor::Implement Seperation Of Concern
         #region Image Upload Code
-        private void ImageUpload(HttpPostedFileBase _image)
+        private void ImageUpload(HttpPostedFileBase _image, string _uploadDir)
         {
-
-            var validImageTypes = new string[]
-                             {
-                     "image/gif",
-                     "image/jpeg",
-                     "image/pjpeg",
-                     "image/png"
-                             };
-
-            if (_image == null || _image.ContentLength == 0)
-            {
-                ModelState.AddModelError("BrandLogo", "This field is required");
-            }
-            else if (!validImageTypes.Contains(_image.ContentType))
-            {
-                ModelState.AddModelError("BrandLogo", "Please choose either a GIF, JPG or PNG image");
-            }
             if (_image != null && _image.ContentLength > 0)
             {
-                var uploadDir = "/Images/BrandImages/";
-                var imagePath = Path.Combine(Server.MapPath(uploadDir), _image.FileName);
-                _imageurl = Path.Combine(uploadDir, _image.FileName);
+                var imagePath = Path.Combine(Server.MapPath(_uploadDir), _image.FileName);
                 _image.SaveAs(imagePath);
 
             }
         }
+        private string UpdateImageUpload(HttpPostedFileBase _image, string _uploadDir,string _uploadedImgUrl)
+        {
+            if (_image != null && _image.ContentLength > 0)
+            {
+                var imagePath = Path.Combine(Server.MapPath(_uploadDir), _image.FileName);
+                _image.SaveAs(imagePath);
+                return Path.Combine(_uploadDir, _image.FileName);
+            }
+            else
+                return _uploadedImgUrl;
+        }
         #endregion
-
     }
 }
