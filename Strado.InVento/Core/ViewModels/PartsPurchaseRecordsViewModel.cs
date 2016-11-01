@@ -3,7 +3,9 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Web;
+using System.Web.Mvc;
 
 namespace Strado.InVento.Core.ViewModels
 {
@@ -17,6 +19,7 @@ namespace Strado.InVento.Core.ViewModels
         public IEnumerable<Parts> Parts { get; set; }
 
         [Display(Name = "Price")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:#.#}")]
         public double PurchasePrice { get; set; }
 
         [Display(Name = "Quantity")]
@@ -29,5 +32,23 @@ namespace Strado.InVento.Core.ViewModels
         public int SuppliersId { get; set; }
 
         public IEnumerable<Suppliers> Suppliers { get; set; }
+
+        public string Heading { get; set; }
+
+        public string Action
+        {
+            get
+            {
+                Expression<Func<Controllers.PartsPurchaseRecordsController, ActionResult>>
+                    update = (c => c.Update(this));
+
+                Expression<Func<Controllers.PartsPurchaseRecordsController, ActionResult>>
+                    create = (c => c.AddRecords(this));
+                var action = (Id != 0) ? update : create;
+                return (action.Body as MethodCallExpression).Method.Name;
+
+
+            }
+        }
     }
 }

@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using Strado.InVento.Core.Validations;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Web;
@@ -19,7 +20,8 @@ namespace Strado.InVento.Core.ViewModels
 
         
         [Display(Name = "Image")]
-        public string PartImageUrl { get; set; }
+        [UploadImage(ErrorMessage ="Enter a valid image type.")]
+        public HttpPostedFileBase PartImage { get; set; }
 
         [Required]
         [Display(Name = "Details")]
@@ -36,20 +38,25 @@ namespace Strado.InVento.Core.ViewModels
 
         public IEnumerable<Brand> Brands { get; set; }
 
-        //public string Action
-        //{
-        //    get
-        //    {
-        //        Expression<Func<Controllers.PartsController, ActionResult>>
-        //            update = (c => c.Update(this));
+        public string Heading { get; set; }
 
-        //        Expression<Func<Controllers.PartsController, ActionResult>>
-        //            create = (c => c.Create(this,));
-        //        var action = (Id != 0) ? update : create;
-        //        return (action.Body as MethodCallExpression).Method.Name;
+        public string ImageUrl { get; set; }
 
 
-        //    }
-        //}
+        public string Action
+        {
+            get
+            {
+                Expression<Func<Controllers.PartsController, ActionResult>>
+                    update = (c => c.Update(this));
+
+                Expression<Func<Controllers.PartsController, ActionResult>>
+                    create = (c => c.Create(this));
+                var action = (Id != 0) ? update : create;
+                return (action.Body as MethodCallExpression).Method.Name;
+
+
+            }
+        }
     }
 }

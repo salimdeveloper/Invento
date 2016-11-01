@@ -10,5 +10,6 @@ namespace Strado.InVento.Core.Interfaces
         Categories GetCategoryWithCategoryId(int id);
         void DeleteCategoryWithCategoryId(int id);
         IEnumerable<Categories> GetAllNonDeleteCategories();
+        void AddCategory(Categories _categoryModel);
     }
 }

@@ -20,5 +20,9 @@ namespace Strado.InVento.Core.Models
         {
             IsDelete = true;
         }
+        internal void Modify(string categoryName)
+        {
+            this.CategoryName = categoryName;
+        }
     }
 }

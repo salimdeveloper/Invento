@@ -13,7 +13,7 @@ namespace Strado.InVento.Core.Models
         ToBuildProduct=1,
 
         [Display(Name = "To Repair Under Warranty")]
-        ToRepaiUnderWarranty =2,
+        ToRepairUnderWarranty =2,
 
         [Display(Name = "To Repair Paid")]
         ToRepairPaid =3,

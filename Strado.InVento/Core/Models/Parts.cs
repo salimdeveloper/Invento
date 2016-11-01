@@ -29,5 +29,15 @@ namespace Strado.InVento.Core.Models
         {
             IsDelete = true;
         }
+
+        internal void Modify(string partName, string partDetails, int brandId, int categoriesId, string partImageUrl)
+        {
+            PartName = partName;
+            PartDetails = partDetails;
+            BrandId = brandId;
+            CategoriesId = categoriesId;
+            PartImageUrl = partImageUrl;
+
+        }
     }
 }

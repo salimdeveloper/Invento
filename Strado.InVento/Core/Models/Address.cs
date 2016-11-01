@@ -23,6 +23,17 @@ namespace Strado.InVento.Core.Models
 
         public string ContactName { get; set; }
 
+        internal void Modify(Address address)
+        {
+            this.Address1 = address.Address1;
+            this.Address2 = address.Address2;
+            this.City = address.City;
+            this.ContactName = address.ContactName;
+            this.ContactNo = address.ContactNo;
+            this.State = address.State;
+            this.Pin = address.Pin;
+        }
+
 
     }
 }

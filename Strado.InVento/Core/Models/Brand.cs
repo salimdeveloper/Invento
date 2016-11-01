@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Strado.InVento.Core.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -16,6 +17,12 @@ namespace Strado.InVento.Core.Models
         [Display(Name = "Brand Logo")]
         public string LogoImgSrc { get; set; }
 
-        
+        public void Modify(string brandname, string logoimgsrc)
+        {
+            this.BrandName = brandname;
+            this.LogoImgSrc = logoimgsrc;
+        }
+
+
     }
 }

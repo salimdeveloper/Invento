@@ -16,7 +16,7 @@ namespace Strado.InVento.Core.Interfaces
         DbSet<Address> Address { get; set; }
         DbSet<Suppliers> Suppliers { get; set; }
         DbSet<Inventory> Inventory { get; set; }
-        DbSet<PartsSaleHistory> PartsSaleHistory { get; set; }
+        DbSet<PartsWithdrawHistory> PartsWithdrawlHistory { get; set; }
         DbSet<PartsPurchaseRecords> PartsPurchaseRecords { get; set; }
     }
 }
