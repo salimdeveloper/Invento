@@ -9,30 +9,22 @@ using System.Web.Http;
 
 namespace Strado.InVento.Controllers.Api
 {
-    public class PartsController : ApiController
+    public class PartsPurchaseRecordsController : ApiController
     {
         private IUnitOfWork _unitOfWork;
-        public PartsController(IUnitOfWork unitOfWork)
+
+        public PartsPurchaseRecordsController(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
         }
-
         [HttpDelete]
         public IHttpActionResult Delete(int id)
         {
-            Parts _parts = _unitOfWork.Parts.GetPartsWithPartId(id);
+            PartsPurchaseRecords _purchaseRecords = _unitOfWork.PartsPurchaseRecords.GetPurchaseRecordsWithId(id);
             Inventory _inventory = _unitOfWork.Inventory.GetInventoryByPartsId(id);
-            if (_parts == null || _parts.IsDelete)
+            if (_inventory == null || _purchaseRecords.IsDelete)
                 return NotFound();
-            _parts.Deleted();
-            if (_parts.IsDelete==true)
-            {
-                if(_inventory!=null)
-                _unitOfWork.Inventory.DeleteInventory(_inventory);
-            }
-            _unitOfWork.Complete();
-            return Ok();
-        
+
         }
     }
 }

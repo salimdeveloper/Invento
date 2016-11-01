@@ -17,12 +17,18 @@ namespace Strado.InVento.Controllers.Api
             _unitOfWork = unitOfWork;
         }
         [HttpDelete]
-        public IHttpActionResult Delete(int id)
+        public IHttpActionResult Deactivate(int id)
         {
             Suppliers _suppliers = _unitOfWork.Suppliers.GetSupplierWithId(id);
-            if (_suppliers == null)
+            if (_suppliers == null) 
                 return NotFound();
-            _unitOfWork.Suppliers.DeleteSupplierWithId(id);
+
+            if(!_suppliers.IsDeactive)
+            _suppliers.Deactivate();
+
+            else if (_suppliers.IsDeactive)
+                _suppliers.Activate();
+
             _unitOfWork.Complete();
             return Ok();
         }
