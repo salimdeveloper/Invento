@@ -18,8 +18,9 @@ namespace Strado.InVento.Persistence.Data
         public DbSet<Address> Address { get; set; }
         public DbSet<Suppliers> Suppliers { get; set; }
         public DbSet<Inventory> Inventory { get; set; }
-        public DbSet<PartsSaleHistory> PartsSaleHistory { get; set; }
+        public DbSet<PartsWithdrawHistory>  PartsWithdrawlHistory { get; set; }
         public DbSet<PartsPurchaseRecords> PartsPurchaseRecords { get; set; }
+
 
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)
@@ -42,7 +43,7 @@ namespace Strado.InVento.Persistence.Data
 
             modelBuilder.Configurations.Add(new InventoryConfigurations());
 
-            modelBuilder.Configurations.Add(new PartsSaleHistoryConfigurations());
+            modelBuilder.Configurations.Add(new PartsWithdrawHistoryConfigurations());
 
             modelBuilder.Configurations.Add(new PartsPurchaseRecordsConfigurations());
         

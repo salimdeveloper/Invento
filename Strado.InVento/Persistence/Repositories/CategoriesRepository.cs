@@ -15,6 +15,11 @@ namespace Strado.InVento.Persistence.Repositories
             _context = context;
         }
 
+        public void AddCategory(Categories _categoryModel)
+        {
+            _context.Categories.Add(_categoryModel);
+        }
+
         public void DeleteCategoryWithCategoryId(int id)
         {
             throw new NotImplementedException();

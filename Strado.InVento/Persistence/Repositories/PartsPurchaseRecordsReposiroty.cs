@@ -1,6 +1,7 @@
 ﻿using Strado.InVento.Core.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using Strado.InVento.Persistence.Data;
@@ -32,6 +33,23 @@ namespace Strado.InVento.Persistence.Repositories
                 
             
             _context.PartsPurchaseRecords.Add(_PartsPurchaseRecords);
+        }
+
+        public IEnumerable<PartsPurchaseRecords> GetAllPartsPurchaseRecords()
+        {
+            return _context.PartsPurchaseRecords
+                .Include(p=>p.Parts)
+                .Include(b=>b.Parts.Brands)
+                .Include(c=>c.Parts.Categories)
+                .OrderByDescending(x=>x.PurchaseDate)
+                .ToList();
+        }
+
+        public PartsPurchaseRecords GetPurchaseRecordsWithId(int id)
+        {
+            return _context.PartsPurchaseRecords.Include(p => p.Parts)
+                .Include(b => b.Parts.Brands)
+                .Include(c => c.Parts.Categories).Where(x => x.Id == id).SingleOrDefault();
         }
     }
 }

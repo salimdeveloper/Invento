@@ -27,6 +27,18 @@ namespace Strado.InVento.Persistence.Repositories
                 .Where(p => p.IsDelete == false).Include(c=>c.Categories).Include(b=>b.Brands)
                 .ToList();
         }
+        public IEnumerable<Parts> GetAllPartsIncludeDeleted()
+        {
+            return _context.Parts
+                .Include(c => c.Categories).Include(b => b.Brands)
+                .ToList();
+        }
+        public IEnumerable<Parts> GetAllPartsExcludeDeleted()
+        {
+            return _context.Parts.Where(p=>p.IsDelete==false)
+                .Include(c => c.Categories).Include(b => b.Brands)
+                .ToList();
+        }
 
         public Parts GetPartsWithPartId(int id)
         {

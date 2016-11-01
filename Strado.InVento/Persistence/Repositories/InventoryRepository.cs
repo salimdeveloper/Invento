@@ -2,7 +2,9 @@
 using Strado.InVento.Core.Interfaces;
 using Strado.InVento.Core.Models;
 using Strado.InVento.Persistence.Data;
+using System.Data.Entity;
 using System.Linq;
+using System.Collections.Generic;
 
 namespace Strado.InVento.Persistence.Repositories
 {
@@ -18,6 +20,18 @@ namespace Strado.InVento.Persistence.Repositories
         public void AddInventory(Inventory inventory)
         {
             _context.Inventory.Add(inventory);
+        }
+
+        public void DeleteInventory(Inventory _inventory)
+        {
+            _context.Inventory.Remove(_inventory);
+        }
+
+        public IEnumerable<Inventory> GetAllInventories()
+        {
+            return _context.Inventory
+                  .Include(p => p.Parts)
+                  .Include(b=>b.Parts.Brands).OrderBy(x=>x.LastUpdated).ToList();
         }
 
         public Inventory GetInventoryByPartsId(int partsId)
