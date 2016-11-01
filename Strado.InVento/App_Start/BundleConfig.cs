@@ -8,6 +8,9 @@ namespace Strado.InVento
         // For more information on bundling, visit http://go.microsoft.com/fwlink/?LinkId=301862
         public static void RegisterBundles(BundleCollection bundles)
         {
+            bundles.Add(new ScriptBundle("~/bundles/app").Include(
+                "~/scripts/StradoApp/app.js"
+                ));
             bundles.Add(new ScriptBundle("~/bundles/plugins").Include(
 
                         //"~/Content/plugins/morris/morris.min.js",
@@ -16,11 +19,13 @@ namespace Strado.InVento
                         //"~/Content/plugins/jvectormap/jquery-jvectormap-world-mill-en.js",
                         //"~/Content/plugins/knob/jquery.knob.js",
                         //"~/Content/plugins/daterangepicker/daterangepicker.js",
-                        //"~/Content/plugins/datepicker/bootstrap-datepicker.js",
+                        "~/Content/plugins/datepicker/bootstrap-datepicker.js",
                         //"~/Content/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js",
-                        //"~/Content/plugins/slimScroll/jquery.slimscroll.min.js",
+                        "~/Content/plugins/slimScroll/jquery.slimscroll.min.js",
                         //"~/Content/plugins/fastclick/fastclick.js",
-                        //"~/Content/dist/js/app.min.js",
+                        "~/Content/dist/js/app.min.js",
+                        "~/Content/plugins/datatables/jquery.dataTables.min.js",
+                        "~/Content/plugins/datatables/dataTables.bootstrap.min.js",
                         //"~/Content/dist/js/pages/dashboard.js",
                         //"~/Content/dist/js/demo.js",
                         "~/Scripts/respond.js",
@@ -49,6 +54,7 @@ namespace Strado.InVento
                       "~/Content/plugins/jvectormap/jquery-jvectormap-1.2.2.css",
                       "~/Content/plugins/datepicker/datepicker3.css",
                       "~/Content/plugins/daterangepicker/daterangepicker.css",
+                      "~/Content/plugins/datatables/dataTables.bootstrap.css",
                       "~/Content/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css",
                        "~/Content/site.css"));
 
