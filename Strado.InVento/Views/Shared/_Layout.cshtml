@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - My ASP.NET Application</title>
+    <title>@ViewBag.Title</title>
 
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
@@ -13,7 +13,7 @@
     @Scripts.Render("~/bundles/modernizr")
 
 </head>
-<body class="skin-blue layout-top-nav">
+<body class="hold-transition skin-blue fixed sidebar-mini">
     <div class="wrapper">
 
         <header class="main-header">
@@ -26,11 +26,11 @@
             </a>
             <!-- Header Navbar: style can be found in header.less -->
             <nav class="navbar navbar-static-top">
-                
+
 
                 <div class="navbar-custom-menu">
                     <ul class="nav navbar-nav">
-                    
+
                         <!-- Tasks: style can be found in dropdown.less -->
                         <li class="dropdown tasks-menu">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -38,7 +38,7 @@
                                 <span class="label label-danger"></span>
                             </a>
                             <ul class="dropdown-menu">
-                                
+
                                 <li>
                                     <!-- inner menu: contains the actual data -->
                                     <ul class="menu">
@@ -47,7 +47,7 @@
                                             <a href="#">
                                                 <h3>
                                                     Brands
-                                                    
+
                                                 </h3>
                                                 <div class="menu-icon">
                                                     <div class="" style="width: 20%" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">
@@ -110,7 +110,32 @@
                             </ul>
                         </li>
                         <!-- User Account: style can be found in dropdown.less -->
-                        
+                        <li class="dropdown user user-menu">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                <img src="~/Content/dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
+                                <span class="hidden-xs">Alexander Pierce</span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <!-- User image -->
+                                <li class="user-header">
+                                    <img src="~/Content/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+
+                                    <p>
+                                        Alexander Pierce
+                                        <small>Member since Nov. 2012</small>
+                                    </p>
+                                </li>
+                                <!-- Menu Footer-->
+                                <li class="user-footer">
+                                    <div class="pull-left">
+                                        <a href="#" class="btn btn-success btn-flat">Profile</a>
+                                    </div>
+                                    <div class="pull-right">
+                                        <a href="#" class="btn btn-danger btn-flat">Sign out</a>
+                                    </div>
+                                </li>
+                            </ul>
+                        </li>
                         <!-- Control Sidebar Toggle Button -->
                         <li>
                             <a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>
@@ -119,17 +144,140 @@
                 </div>
             </nav>
         </header>
-      
+        <aside class="main-sidebar">
+            <!-- sidebar: style can be found in sidebar.less -->
+            <section class="sidebar">
+                <!-- sidebar menu: : style can be found in sidebar.less -->
+                <ul class="sidebar-menu">
+                    <li>
+                        <a href="~/home/">
+                            <i class="fa fa-dashboard"></i> <span>Dashboard</span>
+                            @*<span class="pull-right-container">
+                                    <i class="fa fa-angle-left pull-right"></i>
+                                </span>*@
+                        </a>
+                    </li>
+                    <li class="treeview">
+                        <a href="#">
+                            <i class="fa fa-edit"></i> <span>Invoice</span>
+                            <span class="pull-right-container">
+                                <i class="fa fa-angle-left pull-right"></i>
+                            </span>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li><a href="../forms/general.html"><i class="fa fa-circle-o"></i> New Invoice</a></li>
+                            <li><a href="../forms/advanced.html"><i class="fa fa-circle-o"></i> Invoice Details</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="~/Inventories/Details">
+                            <i class="fa fa-edit"></i> <span>Inventories</span>
 
+                        </a>
+                    </li>
+                    <li class="treeview">
+                        <a href="#">
+                            <i class="fa fa-table"></i> <span>Parts</span>
+                            <span class="pull-right-container">
+                                <i class="fa fa-angle-left pull-right"></i>
+                            </span>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li><a href="~/Parts/Create"><i class="fa fa-circle-o"></i> Add Parts</a></li>
+                            <li><a href="~/Parts/PartsList"><i class="fa fa-circle-o"></i> Parts Details</a></li>
+                        </ul>
+                    </li>
+                    <li class="treeview">
+                        <a href="#">
+                            <i class="fa fa-table"></i> <span>Purchase</span>
+                            <span class="pull-right-container">
+                                <i class="fa fa-angle-left pull-right"></i>
+                            </span>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li><a href="~/PartsPurchaseRecords/AddRecords"><i class="fa fa-circle-o"></i> New Purchase</a></li>
+                            <li><a href="~/PartsPurchaseRecords/PurchaseDetails"><i class="fa fa-circle-o"></i> Purchase Details</a></li>
+                        </ul>
+                    </li>
+                    <li class="treeview">
+                        <a href="">
+                            <i class="fa fa-edit"></i> <span>Parts Withdrwal</span>
+                            <span class="pull-right-container">
+                                <i class="fa fa-angle-left pull-right"></i>
+                            </span>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li><a href="~/partswithdrawhistories/withdraw"><i class="fa fa-circle-o"></i> New Withdrawl</a></li>
+                            <li><a href="~/partswithdrawhistories/WithdrawlHistory"><i class="fa fa-circle-o"></i>Parts Withdrawl Details</a></li>
+                        </ul>
+                    </li>
+                    <li class="treeview">
+                        <a href="#">
+                            <i class="fa fa-folder"></i> <span>Suppliers</span>
+                            <span class="pull-right-container">
+                                <i class="fa fa-angle-left pull-right"></i>
+                            </span>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li><a href="~/supplier/create"><i class="fa fa-circle-o"></i> Add Supplier</a></li>
+                            <li><a href="~/supplier/SupplierList"><i class="fa fa-circle-o"></i> Suppliers List</a></li>
+                        </ul>
+                    </li>
+                    <li class="treeview">
+                        <a href="#">
+                            <i class="fa fa-folder"></i> <span>Categories</span>
+                            <span class="pull-right-container">
+                                <i class="fa fa-angle-left pull-right"></i>
+                            </span>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li><a href="~/Categories/create"><i class="fa fa-circle-o"></i> Add Category</a></li>
+                            <li><a href="~/Categories/CategoriesList"><i class="fa fa-circle-o"></i> Categories List</a></li>
+                        </ul>
+                    </li>
+                    <li class="treeview">
+                        <a href="#">
+                            <i class="fa fa-folder"></i> <span>Brands</span>
+                            <span class="pull-right-container">
+                                <i class="fa fa-angle-left pull-right"></i>
+                            </span>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li><a href="~/Brands/Create"><i class="fa fa-circle-o"></i> Add Brand</a></li>
+                            <li><a href="~/Brands/BrandList"><i class="fa fa-circle-o"></i> Brands List</a></li>
+                        </ul>
+                    </li>
+
+
+                    <li>
+                        <a href="#">
+                            <i class="fa fa-calendar"></i> <span>Users</span>
+                            <span class="pull-right-container">
+                                <small class="label pull-right bg-blue">17</small>
+                            </span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="../mailbox/mailbox.html">
+                            <i class="fa fa-envelope"></i> <span>Settings</span>
+                            <span class="pull-right-container">
+                                <small class="label pull-right bg-yellow">12</small>
+                                <small class="label pull-right bg-green">16</small>
+                                <small class="label pull-right bg-red">5</small>
+                            </span>
+                        </a>
+                    </li>
+                </ul>
+            </section>
+            <!-- /.sidebar -->
+        </aside>
         <!-- Content Wrapper. Contains page content -->
         <div class="content-wrapper">
-    
+
             <!-- Main content -->
             <section class="content">
                 @RenderBody()
             </section>
-
-           
         </div>
         <!-- /.content-wrapper -->
         <footer class="main-footer">
@@ -140,7 +288,7 @@
             reserved.
         </footer>
 
-        
+
         <!-- Add the sidebar's background. This div must be placed
              immediately after the control sidebar -->
         <div class="control-sidebar-bg"></div>
@@ -151,11 +299,23 @@
     <!-- daterangepicker -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.2/moment.min.js"></script>
 
-   
+
     @Scripts.Render("~/bundles/bootstrap")
     @Scripts.Render("~/bundles/Plugins")
 
- 
+
     @RenderSection("scripts", required: false)
+
+    <script>
+        $(document).ready(function () {
+            $('#DataTable').dataTable();
+        });
+
+        $('#datepicker').datepicker();
+
+   
+    </script>
+   
 </body>
+
 </html>

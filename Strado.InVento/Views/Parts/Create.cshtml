@@ -1,83 +1,88 @@
 ﻿@model Strado.InVento.Core.ViewModels.PartsFormViewModel
 
 @{
-    ViewBag.Title = "Create";
+    ViewBag.Title = Model.Heading;
 }
 
 <div class="row">
+    <section class="content-header"></section>
+</div>
+<div class="row">
 
     <!-- left column -->
-    <div class="col-md-6">
+    <div class="col-md-12">
         <!-- general form elements -->
-        <div class="box box-primary">
+        <div class="box">
             <div class="box-header with-border">
-                <h1 class="box-title">Add a Part</h1>
+                <h1 class="box-title">@Model.Heading</h1>
             </div>
             <!-- /.box-header -->
             <!-- form start -->
-            <div class="box-body">
-                @using (Html.BeginForm("Create", "Parts", FormMethod.Post, new { enctype = "multipart/form-data", role = "form" }))
+            <div class="form-horizontal">
+                <div class="box-body">
+                    @using (Html.BeginForm(Model.Action, "Parts", FormMethod.Post, new { enctype = "multipart/form-data", role = "form" }))
             {
-                    @Html.AntiForgeryToken()
-
-
-
-                    @*@Html.ValidationSummary(true, "", new { @class = "help-block" })*@
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.PartName, htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-10">
-                            @Html.EditorFor(model => model.PartName, new { htmlAttributes = new { @class = "form-control" } })
-                            @Html.ValidationMessageFor(model => model.PartName, "", new { @class = "help-block" })
+                        @Html.AntiForgeryToken()
+                        @Html.HiddenFor(m => m.Id)
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.PartName, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.EditorFor(model => model.PartName, new { htmlAttributes = new { @class = "form-control", placeholder = "Parts Name" } })
+                                @Html.ValidationMessageFor(model => model.PartName, "", new { @class = "has-error" })
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.PartImageUrl, htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-10">
-                            <input type="file" name="image" />
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.PartImage, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                <input type="file" class="form-control" name="@Html.NameFor(x => x.PartImage)" id="@Html.IdFor(x => x.PartImage)" />
+                                @Html.ValidationMessageFor(x => x.PartImage, "", new { @class = "has-error" })
+                                @if (Model.ImageUrl != null)
+                                {
+                                    <label class="col-md-2">Uploaded image</label>
+                                    <img class="img-responsive col-md-2" width="100px" src="@Url.Content(Model.ImageUrl)" />
+                                }
+                            </div>
 
-                            <p class="help-block">Select logo image of the brand.</p>
-                            @*@Html.ValidationMessageFor(model => model.PartImageUrl, "", new { @class = "help-block" })*@
                         </div>
-                    </div>
 
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.PartDetails, htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-10">
-                            @Html.TextAreaFor(model => model.PartDetails, new { htmlAttributes = new { @class = "form-control" } })
-                            @Html.ValidationMessageFor(model => model.PartDetails, "", new { @class = "help-block" })
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.PartDetails, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.TextAreaFor(model => model.PartDetails, htmlAttributes: new { @class = "form-control", placeholder = "Details about part...", rows = "5" })
+                                @Html.ValidationMessageFor(model => model.PartDetails, "", htmlAttributes: new { @class = "has-error" })
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.CategoriesId, htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-10">
-                            @Html.DropDownListFor(model => model.CategoriesId, new SelectList(Model.Categories, "Id", "CategoryName"), "Select Category", new { @class = "form-control" })
-                            @Html.ValidationMessageFor(model => model.CategoriesId, "", new { @class = "help-block" })
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.CategoriesId, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.DropDownListFor(model => model.CategoriesId, new SelectList(Model.Categories, "Id", "CategoryName"), "Select Category", new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.CategoriesId, "", new { @class = "has-error" })
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.BrandId, htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-10">
-                            @Html.DropDownListFor(model => model.BrandId, new SelectList(Model.Brands, "Id", "BrandName"), "Select Brand", new { @class = "form-control" })
-                            @Html.ValidationMessageFor(model => model.BrandId, "", new { @class = "help-block" })
-                        </div>
-                    </div>
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.BrandId, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.DropDownListFor(model => model.BrandId, new SelectList(Model.Brands, "Id", "BrandName"), "Select Brand", new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.BrandId, "", new { @class = "has-error" })
+                                </div>
+                            </div>
 
-                    <div class="form-group">
-                        <div class="box-footer">
-                            <button type="submit" class="btn btn-primary">Save</button>
-                        </div>
-                    </div>
+                            <div class="form-group ">
+                                <div class="col-md-3 text-center "><button type="submit" class="btn btn-primary pull-right">Save</button></div>
+                                <div class="col-md-3 text-center ">
+                                    <a href="/Parts/PartsList">
+                                        <button type="button" class="btn btn-default pull-left">Cancel</button>
+                                    </a>
+                                </div>
+                            </div>
+                    }
+                </div>
+                <div>
 
-
-
-
-                }
-            </div>
-            <div>
-                @Html.ActionLink("Back to List", "Index")
+                </div>
             </div>
         </div>
     </div>

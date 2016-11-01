@@ -1,31 +1,169 @@
-﻿@{
-    ViewBag.Title = "Home Page";
+﻿@model Strado.InVento.Core.ViewModels.DashbordViewModel
+@{
+    ViewBag.Title = "Invento - Dashboard";
 }
 
-<div class="jumbotron">
-    <h1>ASP.NET</h1>
-    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-    <p><a href="http://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
-</div>
 
 <div class="row">
-    <div class="col-md-4">
-        <h2>Getting started</h2>
-        <p>
-            ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-            enables a clean separation of concerns and gives you full control over markup
-            for enjoyable, agile development.
-        </p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
+    <section class="content-header">
+        <h1>
+           InVento Dashboard
+            <small>Control panel</small>
+        </h1>
+    </section>
     </div>
-    <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
-    </div>
+<div class="row">
+
+    <button type="button" class="btn bg-maroon  btn-flat margin">Create  Invoice</button>
+    <button type="button" class="btn bg-purple btn-flat margin">Add New Parts</button>
+    <button type="button" class="btn bg-olive btn-flat margin">Add New Purchase</button>
+    <button type="button" class="btn bg-orange btn-flat margin">New Withdrawl</button>
+    <button type="button" class="btn bg-gray btn-flat margin">Add Supplier</button>
+    <button type="button" class="btn bg-gray btn-flat margin">Add Category</button>
+    <button type="button" class="btn bg-gray btn-flat margin">Add Brand</button>
 </div>
+<div class="row">
+        <div class="col-md-8">
+            <!-- TABLE: LATEST ORDERS -->
+            <div class="box box-info">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Latest Parts Withdrawls</h3>
+
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                            <i class="fa fa-minus"></i>
+                        </button>
+                        <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                    </div>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <div class="table-responsive">
+                        <table class="table no-margin">
+                            <thead>
+                                <tr>
+                                    <th>Part ID</th>
+                                    <th>Name</th>
+                                    <th>Quantity</th>
+                                    <th>Reason</th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model.PartsWithdrawls)
+                                {
+                                    <tr>
+                                        <td>@item.PartsId</td>
+                                        <td>@item.Parts.PartName</td>
+                                        <td><span class="label label-success">@item.QtyWithdrawn</span></td>
+                                        <td>
+                                           
+                                           @item.WithdrawlReason
+                                    </td>
+                                </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- /.table-responsive -->
+                </div>
+                <!-- /.box-body -->
+                <div class="box-footer text-center">
+                    <a href="javascript:void(0)" class="uppercase">View All Withdrawls</a>
+                </div>
+                <!-- /.box-footer -->
+            </div>
+            <!-- /.box -->
+            <div class="box box-info">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Latest Parts Purchases</h3>
+
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                            <i class="fa fa-minus"></i>
+                        </button>
+                        <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                    </div>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <div class="table-responsive">
+                        <table class="table no-margin">
+                            <thead>
+                                <tr>
+                                    <th>Part ID</th>
+                                    <th>Name</th>
+                                    <th>Purchase Quantity</th>
+                                    <th>DOP</th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model.PartsPurchases)
+                                {
+                                    <tr>
+                                        <td>@item.PartsId</td>
+                                        <td>@item.Parts.PartName</td>
+                                        <td><span class="label label-success">@item.PurchaseQty</span></td>
+                                        <td>
+
+                                            <span class="label  label-danger"> @item.PurchaseDate.ToShortDateString()</span>
+</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- /.table-responsive -->
+                </div>
+                <!-- /.box-body -->
+                <div class="box-footer text-center">
+                    <a href="javascript:void(0)" class="uppercase">View All Purcases</a>
+                </div>
+                <!-- /.box-footer -->
+            </div>
+        </div>
+        <div class="col-md-4">
+            <!-- PRODUCT LIST -->
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Inventory</h3>
+
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                            <i class="fa fa-minus"></i>
+                        </button>
+                        <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                    </div>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <ul class="products-list product-list-in-box">
+                        @foreach (var item in Model.Inventories)
+            {
+                            <li class="item">
+                                <div class="product-img">
+                                    <img src="@Url.Content(item.Parts.PartImageUrl)" alt="Product Image">
+                                </div>
+                                <div class="product-info">
+                                    <a href="javascript:void(0)" class="product-title">
+                                        @item.Parts.PartName
+                                        <span class="label label-success pull-right">@item.QtyInStock</span>
+                                    </a>
+                                    <span class="product-description">
+                                        <span class="label  label-danger pull-left" >@item.LastUpdated.ToShortDateString()</span> 
+                                    </span>
+                                </div>
+                            </li>
+            <!-- /.item -->
+                        }
+                    </ul>
+                </div>
+                <!-- /.box-body -->
+                <div class="box-footer text-center">
+                    <a href="javascript:void(0)" class="uppercase">View All Inventories</a>
+                </div>
+                <!-- /.box-footer -->
+            </div>
+        </div>
+    </div>

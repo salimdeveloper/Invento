@@ -1,0 +1,82 @@
+﻿@model Strado.InVento.Core.ViewModels.PartsWithdrawHistoryViewModel
+
+@{
+    ViewBag.Title = "Parts Withdrwal";
+}
+
+<div class="row">
+    <section class="content-header"></section>
+</div>
+<div class="row">
+
+    <!-- left column -->
+    <div class="col-md-12">
+        <!-- general form elements -->
+        <div class="box">
+            <div class="box-header with-border">
+                <h1 class="box-title">@Model.Heading</h1>
+            </div>
+            <!-- /.box-header -->
+            <!-- form start -->
+            <div class="form-horizontal">
+                <div class="box-body">
+
+                    @using (Html.BeginForm(Model.Action, "PartsWithdrawHistories"))
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.HiddenFor(m => m.Id)
+                            <div class="form-group">
+                                
+                                    @Html.LabelFor(model => model.PartsId, htmlAttributes: new { @class = "control-label col-md-2" })
+                                    <div class="col-md-10">
+                                        @Html.DropDownListFor(model => model.PartsId, new SelectList(Model.Parts, "Id", "PartName"), "Select Part", new { @class = "form-control" })
+                                        @Html.ValidationMessageFor(model => model.PartsId, "", new { @class = "help-block" })
+                                    </div>
+                                </div>
+                            
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.SoldDate, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    <div class="input-group date">
+                                        <div class="input-group-addon">
+                                            <i class="fa fa-calendar"></i>
+                                        </div>
+                                        @Html.TextBoxFor(model => model.SoldDate,"", htmlAttributes: new { @class = "form-control  pull-left", placeholder = "eg : 13/12/2016", @id = "datepicker" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.WithdrawlReason, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.EnumDropDownListFor(model => model.WithdrawlReason, "Select Reason", new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.WithdrawlReason, "", new { @class = "help-block" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.SoldPrice, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.TextBoxFor(model => model.SoldPrice, htmlAttributes: new { @class = "form-control", placeholder = "eg : 10.00" })
+                                    @Html.ValidationMessageFor(model => model.SoldPrice, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.QtyWithdrawn, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.TextBoxFor(model => model.QtyWithdrawn, htmlAttributes: new { @class = "form-control", placeholder = "eg : 10" })
+                                    @Html.ValidationMessageFor(model => model.QtyWithdrawn, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group ">
+                                <div class="col-md-3 text-center "><button type="submit" class="btn btn-primary pull-right">Save</button></div>
+                                <div class="col-md-3 text-center ">
+                                    <a href="/PartsWithdrawHistories/WithdrawlHistory">
+                                        <button type="button" class="btn btn-default pull-left">Cancel</button>
+                                    </a>
+                                </div>
+                            </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>

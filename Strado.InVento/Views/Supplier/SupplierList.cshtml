@@ -3,99 +3,137 @@
     ViewBag.Title = "SupplierList";
 }
 
-<!-- Content Wrapper. Contains page content -->
-<div class="content-wrapper">
-    <!-- Content Header (Page header) -->
-    <section class="content-header">
-        <h1>
-            Parts List
 
-        </h1>
-    </section>
-
-    <!-- Main content -->
-    <section class="content">
-        <div class="row">
-            <div class="col-xs-12">
-                <div class="box">
-                    <div class="box-header">
-                        <h3 class="box-title">Parts Lists</h3>
-                    </div>
-                    <!-- /.box-header -->
-                    <div class="box-body">
-                        <table id="example1" class="table table-bordered table-striped">
-                            <thead>
-                                <tr>
-                                    <th>Supplier Name</th>
-                                    <th>Contact Name</th>
-                                    <th>Contact No</th>
-                                    <th>Address1</th>
-                                    <th>Address2</th>
-                                    <th>City</th>
-                                    <th>State</th>
-                                    <th>Pin</th>
-                                    <th>Edit</th>
-                                    <th>Delete</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach (var supplier in Model)
-                                {
-                                    <tr>
-                                        <td>@supplier.SupplierName</td>
-                                        <td>@supplier.Address.ContactName</td>
-                                        <td>@supplier.Address.ContactNo</td>
-                                        <td>@supplier.Address.Address1</td>
-                                        <td>@supplier.Address.Address2</td>
-                                        <td>@supplier.Address.City</td>
-                                        <td>@supplier.Address.State</td>
-                                        <td>@supplier.Address.Pin</td>
-                                        <td><a class="btn btn-block btn-info btn-xs" href="@Url.Action("Edit","Supplier", new { id=supplier.Id})">Edit</a></td>
-                                        <td>
-                                            <a href="#" class="js-delete-supplier btn btn-block btn-danger btn-xs" data-supplier-id="@supplier.Id" data-toggle="modal">
-                                                Delete
-                                            </a>
-                                        </td>
-                                    </tr>
-                                }
-
-                            </tbody>
-                            <tfoot>
-                                <tr>
-                                    <th>Supplier Name</th>
-                                    <th>Contact Name</th>
-                                    <th>Contact No</th>
-                                    <th>Address1</th>
-                                    <th>Address2</th>
-                                    <th>City</th>
-                                    <th>State</th>
-                                    <th>Pin</th>
-                                    <th>Edit</th>
-                                    <th>Delete</th>
-                                </tr>
-                            </tfoot>
-                        </table>
-                    </div>
-                    <!-- /.box-body -->
-                </div>
-                <!-- /.box -->
-            </div>
-            <!-- /.col -->
-        </div>
-        <!-- /.row -->
-    </section>
-    <!-- /.content -->
+<div class="row">
+    <section class="content-header"></section>
 </div>
-<!-- /.content-wrapper -->
+<div class="row">
+    <div class="col-md-12">
+
+        <!-- TABLE: LATEST ORDERS -->
+        <div class="box">
+            <div class="box-header with-border">
+                <div class="row">
+                    <div class="col-md-3 col-sm-6 pull-left">
+                        <h3 class="box-title">Suppliers Details</h3>
+                    </div>
+                    <div class="col-md-3 col-sm-6 pull-right">
+                        <a href="/Supplier/Create/">
+                            <button type="button" class="btn btn-sm bg-green btn-flat pull-right">
+                                <i class="fa fa-plus-circle" aria-hidden="true"></i>
+                                Add Supplier
+                            </button>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <!-- /.box-header -->
+            <div class="clear"></div>
+            <div class="box-body">
+                <table id="DataTable" class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th>Status</th>
+                            <th>Supplier Name</th>
+                            <th>Contact Name</th>
+                            <th>Contact No</th>
+                            <th>Address1</th>
+                            <th>Address2</th>
+                            <th>City</th>
+                            <th>State</th>
+                            <th>Pin</th>
+                            <th>Action</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var supplier in Model)
+                        {
+                            <tr>
+                                <td>
+                                    @if (!supplier.IsDeactive)
+                                    {
+                                        <span id="jsActive" class="label label-success">Active</span>
+                                    }
+                                    @if (supplier.IsDeactive)
+                                    {
+                                        <span id="jsDeactive" class="label label-danger">Deactive</span>
+                                    }
+                                </td>
+                                <td>@supplier.SupplierName </td>
+                                <td>@supplier.Address.ContactName</td>
+                                <td>@supplier.Address.ContactNo</td>
+                                <td>@supplier.Address.Address1</td>
+                                <td>@supplier.Address.Address2</td>
+                                <td>@supplier.Address.City</td>
+                                <td>@supplier.Address.State</td>
+                                <td>@supplier.Address.Pin</td>
+                                <td>
+                                    <a class="apadding5" title="Edit" href="@Url.Action("Edit","Supplier", new { id=supplier.Id})">
+                                        <i class="fa fa-pencil"></i>
+                                    </a>
+                                    @if (!supplier.IsDeactive)
+                                    {
+                                        <a href="#" id="jsActiveApi" class="js-deactivate-supplier apadding5" title="Deactivate" data-supplier-id="@supplier.Id" data-toggle="modal">
+                                            <i class="fa fa-remove"></i>
+                                        </a>
+                                    }
+                                    @if (supplier.IsDeactive)
+                                    {
+                                        <a href="#" id="jsDeactiveApi" class="js-deactivate-supplier apadding5" title="Activate" data-supplier-id="@supplier.Id" data-toggle="modal">
+                                            <i class="fa fa-plus"></i>
+                                        </a>
+                                    }
+
+                                </td>
+                            </tr>
+                        }
+
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <th>Status</th>
+                            <th>Supplier Name</th>
+                            <th>Contact Name</th>
+                            <th>Contact No</th>
+                            <th>Address1</th>
+                            <th>Address2</th>
+                            <th>City</th>
+                            <th>State</th>
+                            <th>Pin</th>
+                            <th>Action</th>
+
+                        </tr>
+                    </tfoot>
+                </table>
+
+                <!-- /.table-responsive -->
+            </div>
+            <!-- /.box-body -->
+
+        </div>
+        <!-- /.box -->
+
+    </div>
+
+</div>
 @section scripts
 {
     <script>
 
         $(document).ready(function () {
-            $(".js-delete-supplier").click(function (e) {
+            $(".js-deactivate-supplier").click(function (e) {
                 var link = $(e.target);
+                var actitext = "";
+                if (this.id =="jsActiveApi") {
+                    actitext = "Deactivate";
+                  }
+                if (this.id == "jsDeactiveApi") {
+                    actitext = "Activate";
+                  }
+                var dataVal = $(this).data("supplier-id");
                 bootbox.dialog({
-                    message: "Are you sure you want to delete this brand?",
+                    message: "Are you sure you want to "+ actitext + " this supplier?",
                     title: "Confirm",
                     buttons: {
                         no: {
@@ -110,14 +148,14 @@
                             className: "btn-danger",
                             callback: function () {
                                 $.ajax({
-                                    url: "/api/supplier/" + link.attr("data-supplier-id"),
+                                    url: "/api/supplier/" + dataVal,
                                     method: "DELETE"
                                 })
 
                             .done(function () {
-                                link.parents("tr").fadeOut(function () {
-                                    $(this).remove();
-                                });
+                              
+                                var url = $(location).attr('href');
+                                window.open(url, '_self')
                             })
                             .fail(function () {
                                 alert("Somthing failed!");

@@ -3,53 +3,82 @@
     ViewBag.Title = "CategoriesList";
 }
 
-
-<!-- left column -->
-<div class="col-md-12">
-
-
-    <div class="box">
-        <div class="box-header">
-            <h3 class="box-title">Brands List</h3>
-
-            <div class="box-tools">
-                <ul class="pagination pagination-sm no-margin pull-right">
-                    <li><a href="#">&laquo;</a></li>
-                    <li><a href="#">1</a></li>
-                    <li><a href="#">2</a></li>
-                    <li><a href="#">3</a></li>
-                    <li><a href="#">&raquo;</a></li>
-                </ul>
-            </div>
-        </div>
-        <!-- /.box-header -->
-        <div class="box-body no-padding">
-            <table class="table">
-                <tr>
-                    <th style="width: 10px">#</th>
-                    <th>Brand Name</th>
-                    <th>Brand Logo</th>
-                    <th style="width: 40px">Edit</th>
-                    <th style="width: 40px">Delete</th>
-                </tr>
-                @foreach (var category in Model)
-                {
-                    <tr>
-                        <td>@category.Id</td>
-                        <td>@category.CategoryName</td>
-                        <td><a class="btn btn-block btn-info btn-xs" href="@Url.Action("Edit","Categories", new { id=category.Id})">Edit</a></td>
-                        <td>
-                            <a href="#" class="js-delete-category btn btn-block btn-danger btn-xs" data-category-id="@category.Id" data-toggle="modal">
-                                Delete
-                            </a>
-                        </td>
-                    </tr>
-                }
-            </table>
-        </div>
-        <!-- /.box-body -->
-    </div>
+<div class="row">
+    <section class="content-header"></section>
 </div>
+
+<div class="row">
+    <div class="col-md-12">
+
+        <!-- TABLE: LATEST ORDERS -->
+        <div class="box">
+            <div class="box-header with-border">
+                <div class="row">
+                    <div class="col-md-3 col-sm-6 pull-left">
+                        <h3 class="box-title">Categories Details</h3>
+                    </div>
+                    <div class="col-md-3 col-sm-6 pull-right">
+                        <a href="/Categories/Create/">
+                            <button type="button" class="btn btn-sm bg-green btn-flat pull-right">
+                                <i class="fa fa-plus-circle" aria-hidden="true"></i>
+                                Add New Category
+                            </button>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <!-- /.box-header -->
+            <div class="clear"></div>
+            <div class="box-body">
+                <table id="DataTable" class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th>Category Id</th>
+                            <th>Category Name</th>
+                            <th>Action</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@item.Id</td>
+                                <td>@item.CategoryName</td>
+                                <td>
+                                    <a class="apadding5" title="Edit" href="@Url.Action("Edit","Categories", new { id=item.Id})">
+                                        <i class="fa fa-pencil"></i>
+                                    </a>
+                                    <a href="#" class="js-delete-category apadding5" data-category-id="@item.Id" data-toggle="modal">
+                                        <i class="fa fa-trash-o"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <th>Category Id</th>
+                            <th>Category Name</th>
+                            <th>Action</th>
+
+                        </tr>
+                    </tfoot>
+                </table>
+
+                <!-- /.table-responsive -->
+            </div>
+            <!-- /.box-body -->
+
+        </div>
+        <!-- /.box -->
+
+    </div>
+
+</div>
+<!-- left column -->
+
 
 @section scripts
 {
@@ -58,24 +87,25 @@
         $(document).ready(function () {
             $(".js-delete-category").click(function (e) {
                 var link = $(e.target);
+                var dataVal = $(this).data("category-id");
                 //modal.show();
                 bootbox.dialog({
                     message: "Are you sure you want to delete this category?",
                     title: "Confirm",
                     buttons: {
                         no: {
-                            label:"No",
-                            ClassName:"btn-default",
+                            label: "No",
+                            ClassName: "btn-default",
                             callback: function () {
                                 bootbox.hideAll();
                             }
                         },
                         yes: {
-                            label:"Yes",
-                            CalssName:"btn-danger",
+                            label: "Yes",
+                            CalssName: "btn-danger",
                             callback: function () {
                                 $.ajax({
-                                    url: "/api/categories/" + link.attr("data-category-id"),
+                                    url: "/api/categories/" + dataVal,
                                     method: "DELETE"
                                 })
                                 .done(function () {

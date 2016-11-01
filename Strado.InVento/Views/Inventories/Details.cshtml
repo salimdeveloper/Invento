@@ -1,0 +1,89 @@
+﻿@model IEnumerable<Strado.InVento.Core.Models.Inventory>
+@{
+    ViewBag.Title = "Inventory Details";
+}
+
+<div class="row">
+    <section class="content-header"></section>
+</div>
+<div class="row">
+    <div class="col-md-12">
+
+        <!-- TABLE: LATEST ORDERS -->
+        <div class="box">
+            <div class="box-header with-border">
+                <div class="row">
+                    <div class="col-md-3 col-sm-6 pull-left">
+                        <h3 class="box-title">Inventories Details</h3>
+                    </div>
+                </div>
+            </div>
+            <!-- /.box-header -->
+            <div class="clear"></div>
+            <div class="box-body">
+                <table id="DataTable" class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th>Part Name</th>
+                            <th>Stock Quantity</th>
+                            <th>Last Updated</th>
+                            <th>Brand</th>
+                            @*<th>Action</th>*@
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@item.Parts.PartName</td>
+                                <td>@item.QtyInStock</td>
+                                <td>@item.LastUpdated.ToShortDateString()</td>
+                                <td>@item.Parts.Brands.BrandName</td>
+                                
+                                @*<td>
+                                        <a class="apadding5" title="Edit" href="@Url.Action("Edit","Parts", new { id=item.Id})">
+                                            <i class="fa fa-pencil"></i>
+                                        </a>
+                                        <a href="#" class="js-delete-part apadding5" data-part-id="@item.Id" data-toggle="modal">
+                                            <i class="fa fa-trash-o"></i>
+                                        </a>
+                                    </td>*@
+                            </tr>
+                        }
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <th>Part Name</th>
+                            <th>Details</th>
+                            <th>Category</th>
+                            <th>Brand</th>
+                            @*<th>Action</th>*@
+
+                        </tr>
+                    </tfoot>
+                </table>
+                
+                <!-- /.table-responsive -->
+            </div>
+            <!-- /.box-body -->
+
+        </div>
+        <!-- /.box -->
+    </div>
+
+</div>
+@section scripts
+{
+   
+    <script>
+        $(document).ready(function () {
+            $("td.hover").hover(function () {
+              
+               $(this).append('<div class="tooltip"><img src="' +"../../"+ $(this).data('img-url') + '" /></div>');
+            }, function () {
+                $("div.tooltip").remove();
+            });
+        });
+</script>
+}

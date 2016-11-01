@@ -1,11 +1,12 @@
-﻿@model IEnumerable<Strado.InVento.Core.Models.Parts>
+﻿@model IEnumerable<Strado.InVento.Core.Models.PartsPurchaseRecords>
 @{
-    ViewBag.Title = "PartsList";
+    ViewBag.Title = "PurchaseDetails";
 }
 
 <div class="row">
     <section class="content-header"></section>
 </div>
+
 <div class="row">
     <div class="col-md-12">
 
@@ -14,14 +15,14 @@
             <div class="box-header with-border">
                 <div class="row">
                     <div class="col-md-3 col-sm-6 pull-left">
-                        <h3 class="box-title">Parts Details</h3>
+                        <h3 class="box-title">Purchase Details</h3>
                     </div>
                     <div class="col-md-3 col-sm-6 pull-right">
-                        <a href="/Parts/Create/">
-                        <button type="button" class="btn btn-sm bg-green btn-flat pull-right">
-                            <i class="fa fa-plus-circle" aria-hidden="true"></i>
-                            Add Part
-                        </button>
+                        <a href="/PartsPurchaseRecords/AddRecords">
+                            <button type="button" class="btn btn-sm bg-green btn-flat pull-right">
+                                <i class="fa fa-plus-circle" aria-hidden="true"></i>
+                                Enter New Purchase
+                            </button>
                         </a>
                     </div>
                 </div>
@@ -32,10 +33,12 @@
                 <table id="DataTable" class="table table-bordered table-striped">
                     <thead>
                         <tr>
-                            <th>Part Name</th>
-                            <th>Details</th>
-                            <th>Category</th>
+                            <th>Name</th>
+                            <th>Quantity</th>
+                            <th>Price</th>
                             <th>Brand</th>
+                            <th>Category</th>
+                            <th>DOP</th>
                             <th>Action</th>
 
                         </tr>
@@ -44,15 +47,17 @@
                         @foreach (var item in Model)
                         {
                             <tr>
-                                <td>@item.PartName</td>
-                                <td>@item.PartDetails</td>
-                                <td>@item.Categories.CategoryName</td>
-                                <td>@item.Brands.BrandName</td>
+                                <td>@item.Parts.PartName</td>
+                                <td>@item.PurchaseQty</td>
+                                <td>@item.PurchasePrice</td>
+                                <td>@item.Parts.Brands.BrandName</td>
+                                <td>@item.Parts.Categories.CategoryName</td>
+                                <td>@item.PurchaseDate.ToShortDateString()</td>
                                 <td>
-                                    <a class="apadding5" title="Edit" href="@Url.Action("Edit","Parts", new { id=item.Id})">
+                                    <a class="apadding5" href="@Url.Action("Edit","PartsPurchaseRecords", new { id=item.Id})">
                                         <i class="fa fa-pencil"></i>
                                     </a>
-                                    <a href="#" class="js-delete-part apadding5" data-part-id="@item.Id" data-toggle="modal">
+                                    <a href="#" hidden="hidden" class="js-delete-purchase apadding5" data-purchase-id="@item.Id" data-toggle="modal">
                                         <i class="fa fa-trash-o"></i>
                                     </a>
                                 </td>
@@ -62,10 +67,12 @@
                     </tbody>
                     <tfoot>
                         <tr>
-                            <th>Part Name</th>
-                            <th>Details</th>
-                            <th>Category</th>
+                            <th>Name</th>
+                            <th>Quantity</th>
+                            <th>Price</th>
                             <th>Brand</th>
+                            <th>Category</th>
+                            <th>DOP</th>
                             <th>Action</th>
 
                         </tr>
@@ -82,17 +89,16 @@
     </div>
 
 </div>
-
 @section scripts
 {
     <script>
         $(document).ready(function () {
 
-            $(".js-delete-part").click(function (e) {
+            $(".js-delete-purchase").click(function (e) {
                 var link = $(e.target);
-                var dataVal = $(this).data("part-id");
+                var dataVal = $(this).data("purcahse-id");
                 bootbox.dialog({
-                    message: "Are you sure you want to delete this Part?<b> This will also delete the Inventory associated with this Part!</b>",
+                    message: "Are you sure you want to delete this purchase record?<b> This will also delete the Inventory quantity added with this purchase record!</b>",
                     title: "Confirm Delete",
                     buttons: {
                         no: {

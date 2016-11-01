@@ -1,4 +1,4 @@
-﻿@model Strado.InVento.Core.ViewModels.BrandsViewModel
+﻿@model Strado.InVento.Core.ViewModels.CategoriesViewModel
 @{
     ViewBag.Title = @Model.Heading;
 }
@@ -19,44 +19,28 @@
             <!-- form start -->
             <div class="form-horizontal">
                 <div class="box-body">
-                    @using (Html.BeginForm(Model.Action, "Brands"))
+                    @using (Html.BeginForm(Model.Action, "Categories"))
                     {
                         @Html.AntiForgeryToken()
                         @Html.HiddenFor(m => m.Id)
                         <div class="form-group">
-                            @Html.LabelFor(model => model.BrandName, htmlAttributes: new { @class = "control-label col-md-2" })
+                            @Html.LabelFor(model => model.CategoryName, htmlAttributes: new { @class = "control-label col-md-2" })
                             <div class="col-md-10">
-                                @Html.TextBoxFor(model => model.BrandName, new { @class = "form-control", @placeholder = "eg : StardoTech" })
-                                @Html.ValidationMessageFor(model => model.BrandName, "", new { @class = "has-error" })
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.BrandLogo, htmlAttributes: new { @class = "control-label col-md-2" })
-                            <div class="col-md-10">
-                                <input type="file" name="@Html.NameFor(x => x.BrandLogo)" id="@Html.IdFor(x => x.BrandLogo)" />
-                                @Html.ValidationMessageFor(x => x.BrandLogo)
+                                @Html.TextBoxFor(model => model.CategoryName, new { @class = "form-control", @placeholder = "eg : Domestic" })
+                                @Html.ValidationMessageFor(model => model.CategoryName, "", new { @class = "has-error" })
                             </div>
                         </div>
                         <div class="form-group ">
                             <div class="col-md-3 text-center "><button type="submit" class="btn btn-primary pull-right">Save</button></div>
                             <div class="col-md-3 text-center ">
                                 <div class="col-md-3 text-center ">
-                                    <a href="/Brands/BrandList">
+                                    <a href="/Categories/CategoryList">
                                         <button type="button" class="btn btn-default pull-left">Cancel</button>
                                     </a>
                                 </div>
-
-
                             </div>
-
-
                         </div>
-
                     }
-
-
-
-
                 </div>
             </div>
         </div>
@@ -67,6 +51,4 @@
     {
         @Scripts.Render("~/bundles/jqueryval")
     }
-
-
 

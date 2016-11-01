@@ -1,48 +1,64 @@
 ﻿@using Strado.InVento.Core.ViewModels
 @model LoginViewModel
-@{
-    ViewBag.Title = "Log in";
-}
-<div class="hold-transition login-page">
-    <div class="login-box">
-        <div class="login-logo">
-            <a href="#"><b>InVento</b></a>
-        </div>
-        <div class="login-box-body">
-            <p class="login-box-msg">Sign in to start your session</p>
 
-           
+
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Invento Login</title>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body class="hold-transition login-page">
+    <div>
+
+        <div class="login-box">
+            <div class="login-logo">
+                <a href="#"><b>InVento</b></a>
+            </div>
+            <div class="login-box-body">
+                <p class="login-box-msg">Sign in to start your session</p>
+
+
                 @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
             {
                     @Html.AntiForgeryToken()
-                    <h4>Use a local account to log in.</h4>
                     <hr />
                     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                     <div class="form-group has-feedback">
 
                         @Html.TextBoxFor(m => m.Email, new { @class = "form-control", @placeholder = "Email" })
-                        <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+                        
                         @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
 
                     </div>
                     <div class="form-group has-feedback">
 
                         @Html.PasswordFor(m => m.Password, new { @class = "form-control", @placeholder = "Password" })
-                        <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+                        
                         @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
 
                     </div>
-                    <div class="form-group">
-                        <div class="col-md-offset-2 col-md-10">
+                    <div class="row">
+                        <div class="col-xs-8">
                             <div class="checkbox icheck">
                                 @Html.CheckBoxFor(m => m.RememberMe)
                                 @Html.LabelFor(m => m.RememberMe)
                             </div>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <div class="col-md-offset-2 col-md-10">
-                            <input type="submit" value="Log in" class="btn btn-default" />
+                    <div class="form-group has-feedback text-center">
+                        <div class="col-xs-12">
+                            <input type="submit" value="Sign in" class="btn btn-primary btn-block btn-flat" />
                         </div>
                     </div>
                     <p>
@@ -53,16 +69,16 @@
                     @Html.ActionLink("Forgot your password?", "ForgotPassword")
                 </p>*@
                 }
-           
-        </div>
-    </div>
-    <div class="col-md-4">
-        <section id="socialLoginForm">
-            @Html.Partial("_ExternalLoginsListPartial", new ExternalLoginListViewModel { ReturnUrl = ViewBag.ReturnUrl })
-        </section>
-    </div>
-</div>
 
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}
+            </div>
+
+        </div>
+        
+
+    </div>
+
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+</body>
+</html>
